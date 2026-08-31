@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Monevo — App Screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#12233F;
+  --navy-2:#1C355C;
+  --green:#2ECC71;
+  --blue:#2E86DE;
+  --bg:#F2F6FB;
+  --card:#FFFFFF;
+  --slate:#7C8AA0;
+  --slate-light:#E7EDF6;
+  --coral:#FF6B6B;
+  --gold:#F0A93A;
+  --grad: linear-gradient(120deg, var(--green), var(--blue));
+  --grad-soft: linear-gradient(135deg, rgba(46,204,113,0.14), rgba(46,134,222,0.14));
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  background:
+    radial-gradient(circle at 8% 8%, #E4EDF9 0%, transparent 40%),
+    radial-gradient(circle at 92% 15%, #E1F3EA 0%, transparent 45%),
+    var(--bg);
+  font-family:'Inter',sans-serif;
+  color:var(--navy);
+  padding:56px 40px 120px;
+}
+.mono{ font-family:'IBM Plex Mono',monospace; }
+
+/* ---------- Hero ---------- */
+.hero{ max-width:900px; margin:0 auto 64px; text-align:center; }
+.hero .mark{
+  width:56px; height:56px; margin:0 auto 18px; display:flex; align-items:center; justify-content:center;
+}
+.hero h1{
+  font-family:'Sora',sans-serif; font-weight:800; font-size:42px; letter-spacing:-0.02em;
+  background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p{ color:var(--slate); font-size:15px; margin-top:8px; font-weight:500; letter-spacing:0.02em;}
+.hero .rule{ width:64px; height:3px; background:var(--grad); border-radius:2px; margin:22px auto 0; }
+
+/* ---------- Gallery grid ---------- */
+.gallery{
+  max-width:1400px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:56px 32px;
+}
+.slot{ display:flex; flex-direction:column; align-items:center; }
+.slot .tag{
+  font-family:'Sora',sans-serif; font-weight:700; font-size:13px; color:var(--navy-2);
+  background:var(--card); border:1px solid var(--slate-light); border-radius:20px; padding:6px 14px;
+  margin-bottom:16px; letter-spacing:0.03em;
+}
+.slot .tag span{ color:var(--slate); font-weight:500; margin-right:6px;}
+
+/* ---------- Phone frame ---------- */
+.phone{
+  width:280px; height:572px; background:var(--navy); border-radius:38px; padding:10px;
+  box-shadow: 0 30px 60px -20px rgba(18,35,63,0.35), 0 0 0 1px rgba(18,35,63,0.08);
+}
+.screen{
+  width:100%; height:100%; background:var(--bg); border-radius:30px; overflow:hidden; position:relative;
+  display:flex; flex-direction:column;
+}
+.statusbar{
+  height:32px; flex:none; display:flex; align-items:center; justify-content:space-between;
+  padding:0 20px; font-size:11px; font-weight:600; color:var(--navy);
+}
+.notch{
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:90px; height:18px; background:var(--navy); border-radius:0 0 14px 14px; z-index:5;
+}
+.content{ flex:1; overflow:hidden; padding:14px 16px; display:flex; flex-direction:column; gap:12px; }
+.content.nopad{ padding:0; }
+
+/* bottom nav */
+.tabbar{
+  flex:none; height:58px; background:var(--card); border-top:1px solid var(--slate-light);
+  display:flex; align-items:center; justify-content:space-around; padding:0 6px;
+}
+.tabbar .tab{ display:flex; flex-direction:column; align-items:center; gap:3px; }
+.tabbar .dot{ width:20px; height:20px; }
+.tabbar .lbl{ font-size:8px; color:var(--slate); font-weight:600; }
+.tabbar .tab.active .lbl{ color:var(--navy); }
+
+/* generic bits */
+.card{ background:var(--card); border-radius:16px; padding:14px; box-shadow:0 6px 16px -8px rgba(18,35,63,0.12); }
+.h1{ font-family:'Sora',sans-serif; font-weight:700; font-size:17px; }
+.h2{ font-family:'Sora',sans-serif; font-weight:700; font-size:13px; }
+.small{ font-size:11px; color:var(--slate); font-weight:500; }
+.pill{ border-radius:999px; padding:5px 10px; font-size:10px; font-weight:700; }
+.row{ display:flex; align-items:center; justify-content:space-between; }
+.icon-badge{
+  width:34px; height:34px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+  font-size:15px; flex:none;
+}
+.bar-track{ height:8px; border-radius:6px; background:var(--slate-light); overflow:hidden; }
+.bar-fill{ height:100%; border-radius:6px; background:var(--grad); }
+.btn-grad{
+  background:var(--grad); color:#fff; text-align:center; font-family:'Sora',sans-serif; font-weight:700;
+  font-size:13px; border-radius:13px; padding:13px; box-shadow:0 10px 20px -8px rgba(46,134,222,0.45);
+}
+.chip{
+  border-radius:999px; padding:6px 12px; font-size:11px; font-weight:600; background:var(--card);
+  border:1px solid var(--slate-light); color:var(--navy-2);
+}
+.chip.on{ background:var(--navy); color:#fff; border-color:var(--navy); }
+svg.ic{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <svg class="mark" viewBox="0 0 64 64">
+    <defs><linearGradient id="hg" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#2ECC71"/><stop offset="1" stop-color="#2E86DE"/>
+    </linearGradient></defs>
+    <path d="M4 52 L18 34 L26 44 L44 18" stroke="url(#hg)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M34 18 L46 14 L44 27" fill="url(#hg)"/>
+  </svg>
+  <h1>Monevo</h1>
+  <p>SMART MONEY. SMARTER STUDENT LIFE.</p>
+  <div class="rule"></div>
+</div>
+
+<div class="gallery">
+
+<!-- 1. SPLASH -->
+<div class="slot">
+  <div class="tag"><span>01</span>Splash Screen</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="content nopad" style="align-items:center;justify-content:center;background:var(--navy);position:relative;">
+      <svg width="72" height="72" viewBox="0 0 64 64" style="margin-bottom:14px;">
+        <path d="M4 52 L18 34 L26 44 L44 18" stroke="url(#hg)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M34 18 L46 14 L44 27" fill="url(#hg)"/>
+      </svg>
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:26px;color:#fff;">Monevo</div>
+      <div style="color:#8DA0BF;font-size:10px;font-weight:600;letter-spacing:0.08em;margin-top:4px;">SMART STUDENT FINANCES</div>
+      <div style="position:absolute;bottom:46px;width:120px;height:4px;background:#22406B;border-radius:4px;overflow:hidden;">
+        <div style="width:65%;height:100%;background:var(--grad);"></div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 2. LOGIN -->
+<div class="slot">
+  <div class="tag"><span>02</span>Login / Sign Up</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content" style="padding-top:22px;">
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:22px;">Welcome back</div>
+      <div class="small" style="margin-top:-8px;">Log in to keep tracking your money.</div>
+      <div style="display:flex;background:var(--slate-light);border-radius:12px;padding:4px;margin-top:6px;">
+        <div style="flex:1;text-align:center;padding:8px;background:#fff;border-radius:9px;font-weight:700;font-size:12px;box-shadow:0 3px 8px -4px rgba(0,0,0,0.15);">Log In</div>
+        <div style="flex:1;text-align:center;padding:8px;font-weight:700;font-size:12px;color:var(--slate);">Register</div>
+      </div>
+      <div style="margin-top:8px;">
+        <div class="small" style="margin-bottom:5px;">EMAIL</div>
+        <div class="card" style="padding:11px 13px;font-size:12px;color:var(--navy-2);">alex.rivera@university.edu</div>
+      </div>
+      <div>
+        <div class="small" style="margin-bottom:5px;">PASSWORD</div>
+        <div class="card" style="padding:11px 13px;font-size:12px;color:var(--navy-2);">••••••••••</div>
+      </div>
+      <div style="text-align:right;"><span class="small" style="color:var(--blue);font-weight:700;">Forgot password?</span></div>
+      <div class="btn-grad" style="margin-top:6px;">Log In</div>
+      <div style="text-align:center;color:var(--slate);font-size:10px;margin-top:4px;">— or continue with —</div>
+      <div style="display:flex;gap:10px;">
+        <div class="card" style="flex:1;text-align:center;padding:9px;font-size:12px;font-weight:700;">Google</div>
+        <div class="card" style="flex:1;text-align:center;padding:9px;font-size:12px;font-weight:700;">Apple</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 3. HOME DASHBOARD -->
+<div class="slot">
+  <div class="tag"><span>03</span>Home Dashboard</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="row">
+        <div>
+          <div class="small">Hi Alex 👋</div>
+          <div class="h1">Your money today</div>
+        </div>
+        <div class="icon-badge" style="background:var(--slate-light);">🔔</div>
+      </div>
+      <div style="background:var(--grad);border-radius:18px;padding:16px;color:#fff;">
+        <div style="font-size:11px;opacity:0.85;font-weight:600;">TOTAL BALANCE</div>
+        <div class="mono" style="font-size:26px;font-weight:600;margin-top:2px;">$1,248.50</div>
+        <div class="row" style="margin-top:10px;">
+          <div style="font-size:11px;opacity:0.9;">Monthly budget</div>
+          <div class="mono" style="font-size:11px;">$487 / $800</div>
+        </div>
+        <div class="bar-track" style="background:rgba(255,255,255,0.3);margin-top:4px;"><div style="width:61%;height:100%;background:#fff;border-radius:6px;"></div></div>
+      </div>
+      <div class="h2">Quick access</div>
+      <div style="display:flex;justify-content:space-between;">
+        <div style="text-align:center;"><div class="icon-badge" style="background:var(--grad-soft);margin:0 auto 4px;">➕</div><div class="small" style="font-size:9px;">Add</div></div>
+        <div style="text-align:center;"><div class="icon-badge" style="background:var(--grad-soft);margin:0 auto 4px;">🧾</div><div class="small" style="font-size:9px;">Split</div></div>
+        <div style="text-align:center;"><div class="icon-badge" style="background:var(--grad-soft);margin:0 auto 4px;">🐷</div><div class="small" style="font-size:9px;">Save</div></div>
+        <div style="text-align:center;"><div class="icon-badge" style="background:var(--grad-soft);margin:0 auto 4px;">🏷️</div><div class="small" style="font-size:9px;">Deals</div></div>
+      </div>
+      <div class="h2">Recent transactions</div>
+      <div class="card" style="padding:10px 12px;display:flex;flex-direction:column;gap:9px;">
+        <div class="row"><div style="display:flex;align-items:center;gap:8px;"><div class="icon-badge" style="background:#FDECEC;">🍔</div><div><div style="font-size:12px;font-weight:600;">Campus Diner</div><div class="small">Food · Today</div></div></div><div class="mono" style="font-size:12px;color:var(--coral);">-$8.40</div></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:8px;"><div class="icon-badge" style="background:#E9F6FE;">🚌</div><div><div style="font-size:12px;font-weight:600;">Metro Pass</div><div class="small">Transport · Yesterday</div></div></div><div class="mono" style="font-size:12px;color:var(--coral);">-$25.00</div></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:8px;"><div class="icon-badge" style="background:#E8FAF0;">💰</div><div><div style="font-size:12px;font-weight:600;">Part-time job</div><div class="small">Income · 2 days ago</div></div></div><div class="mono" style="font-size:12px;color:var(--green);">+$120.00</div></div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <div class="tab active"><svg class="ic" style="color:var(--navy);" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg><div class="lbl">Track</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg><div class="lbl">Insights</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><div class="lbl">Profile</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 4. EXPENSE TRACKER -->
+<div class="slot">
+  <div class="tag"><span>04</span>Expense Tracker</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="h1">Add transaction</div>
+      <div style="display:flex;background:var(--slate-light);border-radius:12px;padding:4px;">
+        <div style="flex:1;text-align:center;padding:7px;font-weight:700;font-size:12px;color:var(--slate);">Income</div>
+        <div style="flex:1;text-align:center;padding:7px;background:#fff;border-radius:9px;font-weight:700;font-size:12px;box-shadow:0 3px 8px -4px rgba(0,0,0,0.15);">Expense</div>
+      </div>
+      <div style="text-align:center;padding:8px 0;">
+        <div class="mono" style="font-size:32px;font-weight:600;">$8.40</div>
+        <div class="small">Amount</div>
+      </div>
+      <div class="h2">Category</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div class="card" style="text-align:center;padding:9px 4px;border:2px solid var(--blue);"><div style="font-size:17px;">🍔</div><div class="small" style="font-size:9px;margin-top:2px;">Food</div></div>
+        <div class="card" style="text-align:center;padding:9px 4px;"><div style="font-size:17px;">🚌</div><div class="small" style="font-size:9px;margin-top:2px;">Transport</div></div>
+        <div class="card" style="text-align:center;padding:9px 4px;"><div style="font-size:17px;">🏠</div><div class="small" style="font-size:9px;margin-top:2px;">Rent</div></div>
+        <div class="card" style="text-align:center;padding:9px 4px;"><div style="font-size:17px;">🎮</div><div class="small" style="font-size:9px;margin-top:2px;">Fun</div></div>
+        <div class="card" style="text-align:center;padding:9px 4px;"><div style="font-size:17px;">📚</div><div class="small" style="font-size:9px;margin-top:2px;">Books</div></div>
+        <div class="card" style="text-align:center;padding:9px 4px;"><div style="font-size:17px;">➕</div><div class="small" style="font-size:9px;margin-top:2px;">Other</div></div>
+      </div>
+      <div class="btn-grad">Save transaction</div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></div>
+      <div class="tab active"><svg class="ic" style="color:var(--navy);" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg><div class="lbl">Track</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg><div class="lbl">Insights</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><div class="lbl">Profile</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 5. BUDGET PLANNER -->
+<div class="slot">
+  <div class="tag"><span>05</span>Budget Planner</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="h1">Monthly budget</div>
+      <div class="card" style="text-align:center;padding:18px;">
+        <svg width="120" height="120" viewBox="0 0 120 120" style="margin:0 auto;">
+          <circle cx="60" cy="60" r="50" stroke="#E7EDF6" stroke-width="12" fill="none"/>
+          <circle cx="60" cy="60" r="50" stroke="url(#hg)" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="115" transform="rotate(-90 60 60)"/>
+          <text x="60" y="56" text-anchor="middle" font-family="IBM Plex Mono" font-size="18" font-weight="600" fill="#12233F">61%</text>
+          <text x="60" y="72" text-anchor="middle" font-family="Inter" font-size="9" fill="#7C8AA0">used</text>
+        </svg>
+        <div class="small" style="margin-top:6px;">Remaining <span class="mono" style="color:var(--navy);font-weight:700;">$312.40</span> of $800</div>
+      </div>
+      <div class="card" style="background:#FFF6EA;border:1px solid #F5D9A3;">
+        <div style="font-size:11px;font-weight:700;color:#B4700C;">⚠ Close to your Food limit</div>
+        <div class="small" style="margin-top:2px;">You've used 92% of your food budget.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div><div class="row" style="margin-bottom:4px;"><span class="h2">Food</span><span class="mono small">$138 / $150</span></div><div class="bar-track"><div class="bar-fill" style="width:92%;"></div></div></div>
+        <div><div class="row" style="margin-bottom:4px;"><span class="h2">Transport</span><span class="mono small">$60 / $120</span></div><div class="bar-track"><div class="bar-fill" style="width:50%;"></div></div></div>
+        <div><div class="row" style="margin-bottom:4px;"><span class="h2">Entertainment</span><span class="mono small">$40 / $100</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;"></div></div></div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 6. MEAL PLANNER -->
+<div class="slot">
+  <div class="tag"><span>06</span>Meal Planner</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="h1">This week's meals</div>
+      <div style="display:flex;justify-content:space-between;">
+        <div style="text-align:center;"><div class="small" style="font-size:9px;">Mon</div><div style="width:26px;height:26px;border-radius:8px;background:var(--slate-light);margin-top:3px;"></div></div>
+        <div style="text-align:center;"><div class="small" style="font-size:9px;">Tue</div><div style="width:26px;height:26px;border-radius:8px;background:var(--grad);margin-top:3px;"></div></div>
+        <div style="text-align:center;"><div class="small" style="font-size:9px;">Wed</div><div style="width:26px;height:26px;border-radius:8px;background:var(--slate-light);margin-top:3px;"></div></div>
+        <div style="text-align:center;"><div class="small" style="font-size:9px;">Thu</div><div style="width:26px;height:26px;border-radius:8px;background:var(--slate-light);margin-top:3px;"></div></div>
+        <div style="text-align:center;"><div class="small" style="font-size:9px;">Fri</div><div style="width:26px;height:26px;border-radius:8px;background:var(--slate-light);margin-top:3px;"></div></div>
+        <div style="text-align:center;"><div class="small" style="font-size:9px;">Sat</div><div style="width:26px;height:26px;border-radius:8px;background:var(--slate-light);margin-top:3px;"></div></div>
+        <div style="text-align:center;"><div class="small" style="font-size:9px;">Sun</div><div style="width:26px;height:26px;border-radius:8px;background:var(--slate-light);margin-top:3px;"></div></div>
+      </div>
+      <div class="card" style="background:var(--grad-soft);">
+        <div class="row"><span class="h2">Today's meal budget</span><span class="mono" style="font-size:12px;font-weight:700;">$12.50 / $15</span></div>
+        <div class="bar-track" style="margin-top:6px;"><div class="bar-fill" style="width:83%;"></div></div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:10px;">
+        <div class="icon-badge" style="background:#FDECEC;">🌅</div>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;">Breakfast — Oatmeal & fruit</div><div class="small">Quick · Budget-friendly</div></div>
+        <div class="mono" style="font-size:12px;">$2.20</div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:10px;">
+        <div class="icon-badge" style="background:#E9F6FE;">☀️</div>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;">Lunch — Rice & grilled veg</div><div class="small">Campus cafeteria</div></div>
+        <div class="mono" style="font-size:12px;">$5.30</div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:10px;">
+        <div class="icon-badge" style="background:#F1EAFB;">🌙</div>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;">Dinner — Pasta & salad</div><div class="small">Home-cooked</div></div>
+        <div class="mono" style="font-size:12px;">$5.00</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 7. RESTAURANT FINDER -->
+<div class="slot">
+  <div class="tag"><span>07</span>Restaurant Finder</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="h1">Eat well, spend less</div>
+      <div class="card" style="display:flex;align-items:center;gap:8px;padding:11px 13px;">
+        <svg class="ic" style="width:15px;height:15px;color:var(--slate);" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <span class="small">Nearby affordable eats</span>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <div class="chip on">All</div><div class="chip">$</div><div class="chip">$$</div><div class="chip">Student Deals</div>
+      </div>
+      <div class="card" style="display:flex;gap:10px;">
+        <div style="width:52px;height:52px;border-radius:12px;background:var(--grad);flex:none;"></div>
+        <div style="flex:1;">
+          <div class="row"><span style="font-size:12px;font-weight:700;">Green Bowl Kitchen</span><span class="pill" style="background:#E8FAF0;color:#1E9E56;">$</span></div>
+          <div class="small">0.4 mi · Bowls & salads</div>
+          <div class="pill" style="background:#FFF6EA;color:#B4700C;display:inline-block;margin-top:4px;">🎓 10% student discount</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:10px;">
+        <div style="width:52px;height:52px;border-radius:12px;background:var(--navy-2);flex:none;"></div>
+        <div style="flex:1;">
+          <div class="row"><span style="font-size:12px;font-weight:700;">Noodle House 88</span><span class="pill" style="background:#E8FAF0;color:#1E9E56;">$</span></div>
+          <div class="small">0.6 mi · Asian comfort food</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:10px;">
+        <div style="width:52px;height:52px;border-radius:12px;background:#8DA0BF;flex:none;"></div>
+        <div style="flex:1;">
+          <div class="row"><span style="font-size:12px;font-weight:700;">Campus Deli Co.</span><span class="pill" style="background:#FDECEC;color:#C13E3E;">$$</span></div>
+          <div class="small">0.9 mi · Sandwiches</div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 8. BILL SPLITTER -->
+<div class="slot">
+  <div class="tag"><span>08</span>Bill Splitter</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="h1">Split a bill</div>
+      <div style="text-align:center;padding:6px 0;">
+        <div class="small">Bill total</div>
+        <div class="mono" style="font-size:30px;font-weight:600;">$50.00</div>
+      </div>
+      <div class="card row">
+        <span class="h2">Split between</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="icon-badge" style="background:var(--slate-light);width:26px;height:26px;font-size:14px;">–</div>
+          <span class="mono" style="font-weight:700;">4</span>
+          <div class="icon-badge" style="background:var(--slate-light);width:26px;height:26px;font-size:14px;">+</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:-6px;padding-left:4px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--grad);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">A</div>
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--navy-2);border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">J</div>
+        <div style="width:32px;height:32px;border-radius:50%;background:#8DA0BF;border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">M</div>
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--gold);border:2px solid #fff;margin-left:-8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">R</div>
+      </div>
+      <div class="card" style="background:var(--grad-soft);text-align:center;">
+        <div class="small">Each person pays</div>
+        <div class="mono" style="font-size:22px;font-weight:700;">$12.50</div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <div class="card" style="flex:1;text-align:center;padding:10px;font-size:12px;font-weight:700;">💬 Message</div>
+        <div class="card" style="flex:1;text-align:center;padding:10px;font-size:12px;font-weight:700;">🔗 Copy link</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 9. SAVINGS GOALS -->
+<div class="slot">
+  <div class="tag"><span>09</span>Savings Goals</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="row"><span class="h1">Savings goals</span><span class="pill" style="background:var(--navy);color:#fff;">+ New</span></div>
+      <div class="card" style="display:flex;gap:12px;align-items:center;">
+        <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="23" stroke="#E7EDF6" stroke-width="7" fill="none"/><circle cx="28" cy="28" r="23" stroke="url(#hg)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="145" stroke-dashoffset="73" transform="rotate(-90 28 28)"/></svg>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:13px;">💻 New Laptop</div>
+          <div class="mono small">$450 / $900</div>
+          <div class="small" style="color:var(--blue);font-weight:700;">~3 months left</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:12px;align-items:center;">
+        <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="23" stroke="#E7EDF6" stroke-width="7" fill="none"/><circle cx="28" cy="28" r="23" stroke="url(#hg)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="145" stroke-dashoffset="109" transform="rotate(-90 28 28)"/></svg>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:13px;">✈️ Spring Break Trip</div>
+          <div class="mono small">$120 / $480</div>
+          <div class="small" style="color:var(--blue);font-weight:700;">~6 months left</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;gap:12px;align-items:center;">
+        <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="23" stroke="#E7EDF6" stroke-width="7" fill="none"/><circle cx="28" cy="28" r="23" stroke="url(#hg)" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="145" stroke-dashoffset="18" transform="rotate(-90 28 28)"/></svg>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:13px;">🛟 Emergency Fund</div>
+          <div class="mono small">$380 / $500</div>
+          <div class="small" style="color:var(--blue);font-weight:700;">~1 month left</div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 10. STUDENT DISCOUNTS -->
+<div class="slot">
+  <div class="tag"><span>10</span>Student Discounts</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="h1">Student deals</div>
+      <div style="display:flex;gap:6px;overflow:hidden;">
+        <div class="chip on">All</div><div class="chip">Food</div><div class="chip">Tech</div><div class="chip">Fashion</div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:10px;">
+        <div class="icon-badge" style="background:#111;color:#fff;">🎧</div>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;">SoundWave Audio</div><div class="small">Headphones & speakers</div></div>
+        <div class="pill" style="background:var(--gold);color:#fff;">20% OFF</div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:10px;">
+        <div class="icon-badge" style="background:#FDECEC;">🍕</div>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;">Milano Pizza Co.</div><div class="small">Dine-in & delivery</div></div>
+        <div class="pill" style="background:var(--gold);color:#fff;">15% OFF</div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;gap:10px;">
+        <div class="icon-badge" style="background:#E9F6FE;">👕</div>
+        <div style="flex:1;"><div style="font-size:12px;font-weight:700;">Basic Thread Co.</div><div class="small">Apparel</div></div>
+        <div class="pill" style="background:var(--gold);color:#fff;">25% OFF</div>
+      </div>
+      <div class="card" style="background:var(--grad-soft);text-align:center;padding:10px;">
+        <div class="small" style="font-weight:700;color:var(--navy-2);">🎓 Verify your student email to unlock more deals</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 11. SPENDING ANALYTICS -->
+<div class="slot">
+  <div class="tag"><span>11</span>Spending Analytics</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div class="row"><span class="h1">Analytics</span><div style="display:flex;background:var(--slate-light);border-radius:10px;padding:3px;font-size:9px;font-weight:700;"><span style="padding:4px 8px;background:#fff;border-radius:7px;">This month</span><span style="padding:4px 8px;color:var(--slate);">Last</span></div></div>
+      <div class="card" style="text-align:center;padding:16px;">
+        <div style="width:110px;height:110px;margin:0 auto;border-radius:50%;background:conic-gradient(var(--blue) 0% 38%, var(--green) 38% 63%, var(--gold) 63% 82%, #8DA0BF 82% 100%);display:flex;align-items:center;justify-content:center;">
+          <div style="width:62px;height:62px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <div class="mono" style="font-size:13px;font-weight:700;">$487</div>
+            <div class="small" style="font-size:8px;">spent</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:8px;">
+        <div class="row"><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:var(--blue);display:inline-block;"></span><span class="small">Rent & bills</span></div><span class="mono small" style="font-weight:700;">38%</span></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:var(--green);display:inline-block;"></span><span class="small">Food</span></div><span class="mono small" style="font-weight:700;">25%</span></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:var(--gold);display:inline-block;"></span><span class="small">Fun & entertainment</span></div><span class="mono small" style="font-weight:700;">19%</span></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#8DA0BF;display:inline-block;"></span><span class="small">Transport & other</span></div><span class="mono small" style="font-weight:700;">18%</span></div>
+      </div>
+      <div class="small" style="text-align:center;color:var(--green);font-weight:700;">▼ 12% less than last month</div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg><div class="lbl">Track</div></div>
+      <div class="tab active"><svg class="ic" style="color:var(--navy);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg><div class="lbl">Insights</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><div class="lbl">Profile</div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- 12. SETTINGS / PROFILE -->
+<div class="slot">
+  <div class="tag"><span>12</span>Settings / Profile</div>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="statusbar"><span>9:41</span><span>●●● 100%</span></div>
+    <div class="content">
+      <div style="text-align:center;padding-top:6px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:var(--grad);margin:0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:22px;">AR</div>
+        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;margin-top:8px;">Alex Rivera</div>
+        <div class="small">alex.rivera@university.edu</div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden;">
+        <div class="row" style="padding:12px 14px;border-bottom:1px solid var(--slate-light);"><span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;"><svg class="ic" style="width:16px;height:16px;color:var(--slate);" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Edit Profile</span><span class="small">›</span></div>
+        <div class="row" style="padding:12px 14px;border-bottom:1px solid var(--slate-light);"><span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;"><svg class="ic" style="width:16px;height:16px;color:var(--slate);" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>Security</span><span class="small">›</span></div>
+        <div class="row" style="padding:12px 14px;border-bottom:1px solid var(--slate-light);"><span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;"><svg class="ic" style="width:16px;height:16px;color:var(--slate);" viewBox="0 0 24 24"><path d="M18 8a6 6 0 00-12 0c0 4-2 5-2 7h16c0-2-2-3-2-7"/><path d="M10 21h4"/></svg>Notifications</span><span class="small">›</span></div>
+        <div class="row" style="padding:12px 14px;border-bottom:1px solid var(--slate-light);">
+          <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;"><svg class="ic" style="width:16px;height:16px;color:var(--slate);" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>Dark Mode</span>
+          <div style="width:32px;height:18px;border-radius:10px;background:var(--grad);position:relative;"><div style="width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;"></div></div>
+        </div>
+        <div class="row" style="padding:12px 14px;"><span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;color:var(--coral);"><svg class="ic" style="width:16px;height:16px;color:var(--coral);" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Log Out</span></div>
+      </div>
+    </div>
+    <div class="tabbar">
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><div class="lbl">Home</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg><div class="lbl">Track</div></div>
+      <div class="tab"><svg class="ic" style="color:var(--slate);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg><div class="lbl">Insights</div></div>
+      <div class="tab active"><svg class="ic" style="color:var(--navy);" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><div class="lbl">Profile</div></div>
+    </div>
+  </div></div>
+</div>
+
+</div>
+
+<svg width="0" height="0" style="position:absolute;">
+  <defs><linearGradient id="hg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2ECC71"/><stop offset="1" stop-color="#2E86DE"/></linearGradient></defs>
+</svg>
+
+</body>
+</html>
