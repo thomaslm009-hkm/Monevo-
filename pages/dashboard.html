@@ -144,7 +144,7 @@
       if (t.type === 'income') totalIncomeThisMonth += Number(t.amount);
     });
 
-    const currentBalance = 1248.50; // base student account
+    const currentBalance = MonevoStore.getTotalBalance();
     document.getElementById('totalBalanceDisplay').textContent = MonevoUI.formatCurrency(currentBalance);
 
     const monthlyBudget = user.monthlyBudget || 800.00;

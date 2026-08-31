@@ -170,10 +170,14 @@
 
   function calculateSplit() {
     const total = parseFloat(document.getElementById('splitTotalInput').value) || 0;
+    const note = document.getElementById('splitNoteInput').value;
     const perPerson = total > 0 ? (total / peopleCount) : 0;
 
     document.getElementById('perPersonAmountDisplay').textContent = MonevoUI.formatCurrency(perPerson);
     document.getElementById('splitNoteSubtitle').textContent = `Evenly divided among ${peopleCount} roommates`;
+
+    // Persist to localStorage
+    MonevoStore.saveBillSplit(total, peopleCount, note);
 
     // Render Avatars
     const avatarContainer = document.getElementById('avatarStack');
@@ -208,6 +212,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    const saved = MonevoStore.state.billSplitState;
+    if (saved) {
+      if (saved.billTotal !== undefined) document.getElementById('splitTotalInput').value = Number(saved.billTotal).toFixed(2);
+      if (saved.peopleCount !== undefined) {
+        peopleCount = saved.peopleCount;
+        document.getElementById('peopleCountDisplay').textContent = peopleCount;
+      }
+      if (saved.note !== undefined) document.getElementById('splitNoteInput').value = saved.note;
+    }
     calculateSplit();
   });
 </script>

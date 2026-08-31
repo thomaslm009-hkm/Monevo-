@@ -207,7 +207,7 @@
     const container = document.getElementById('mealsListContainer');
     let html = '';
 
-    dayMeals.forEach(meal => {
+    dayMeals.forEach((meal, idx) => {
       let icon = meal.icon || (meal.type === 'Breakfast' ? '🌅' : meal.type === 'Lunch' ? '☀️' : '🌙');
       html += `
         <div class="card card-sm" style="display: flex; align-items: center; gap: 10px;">
@@ -216,7 +216,10 @@
             <div style="font-size: 12px; font-weight: 700;">${meal.type} — ${meal.title}</div>
             <div class="sub-text">${meal.tag || 'Student Choice'}</div>
           </div>
-          <div class="mono" style="font-size: 12px; font-weight: 700; color: var(--navy);">${MonevoUI.formatCurrency(meal.cost)}</div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="mono" style="font-size: 12px; font-weight: 700; color: var(--navy);">${MonevoUI.formatCurrency(meal.cost)}</span>
+            <span onclick="removeMealItem(${idx})" style="cursor: pointer; opacity: 0.4; font-size: 14px;">✕</span>
+          </div>
         </div>
       `;
     });
@@ -226,6 +229,12 @@
     }
 
     container.innerHTML = html;
+  }
+
+  function removeMealItem(idx) {
+    MonevoStore.deleteMealItem(activeDay, idx);
+    MonevoUI.showToast('Meal removed from plan', '🗑️');
+    renderMealPlan();
   }
 
   function openAddMealModal() {

@@ -296,9 +296,14 @@ class StoreManager {
 
   // Transactions & Calculations
   getTotalBalance() {
-    const base = 1248.50; // default base cash
-    let balance = base;
-    // Calculate net from dynamic transactions compared to initial
+    let balance = Number(this.state.user.startingBalance !== undefined ? this.state.user.startingBalance : 1248.50);
+    this.state.transactions.forEach(tx => {
+      if (tx.type === 'income') {
+        balance += Number(tx.amount);
+      } else if (tx.type === 'expense') {
+        balance -= Number(tx.amount);
+      }
+    });
     return balance;
   }
 
@@ -347,6 +352,22 @@ class StoreManager {
       this.state.mealPlan.days[day] = [];
     }
     this.state.mealPlan.days[day].push(meal);
+    this.saveState();
+  }
+
+  deleteMealItem(day, index) {
+    if (this.state.mealPlan.days[day]) {
+      this.state.mealPlan.days[day].splice(index, 1);
+      this.saveState();
+    }
+  }
+
+  saveBillSplit(total, people, note) {
+    this.state.billSplitState = {
+      billTotal: Number(total),
+      peopleCount: Number(people),
+      note: note || ''
+    };
     this.saveState();
   }
 }
