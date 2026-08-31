@@ -314,7 +314,61 @@ The app utilizes a design system that reflects modern mobile app standards:
 
 ---
 
-## 6. Implementation Roadmap & Development Phases
+## 6. Project Directory & File Structure
+
+The project follows a clean, modular structure:
+
+```
+Monevo/
+│
+├── index.html
+│
+├── pages/
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── expenses.html
+│   ├── budget.html
+│   ├── meal-planner.html
+│   ├── restaurant.html
+│   ├── bill-splitter.html
+│   ├── savings.html
+│   ├── analytics.html
+│   ├── discounts.html
+│   └── profile.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   └── app.js
+│
+└── images/
+    └── monevo-logo.png
+```
+
+### File & Directory Role Mapping:
+
+| Path | Associated Screen | Key Responsibilities |
+| :--- | :--- | :--- |
+| **`index.html`** | Screen 01 (Splash) | App entry point, brand splash screen, session check & redirection |
+| **`pages/login.html`** | Screen 02 (Auth) | Student login, registration, password recovery, SSO buttons |
+| **`pages/dashboard.html`** | Screen 03 (Home) | Total balance card, quick shortcuts, recent transactions feed |
+| **`pages/expenses.html`** | Screen 04 (Tracker) | Income/expense switcher, amount input, category tag selector |
+| **`pages/budget.html`** | Screen 05 (Budget) | Monthly spending gauge, category limits & near-limit warning cards |
+| **`pages/meal-planner.html`** | Screen 06 (Meals) | 7-day strip, breakfast/lunch/dinner daily expense budget tracking |
+| **`pages/restaurant.html`** | Screen 07 (Dining) | Affordable restaurant finder, price filters, student discount tags |
+| **`pages/bill-splitter.html`** | Screen 08 (Split) | Per-person calculation, roommate avatars, share breakdown button |
+| **`pages/savings.html`** | Screen 09 (Goals) | Semester target savings rings, remaining time estimates, deposits |
+| **`pages/discounts.html`** | Screen 10 (Deals) | Verified student perks, promo codes, brand deal cards |
+| **`pages/analytics.html`** | Screen 11 (Insights) | Donut chart breakdowns, monthly spending comparison insights |
+| **`pages/profile.html`** | Screen 12 (Profile) | Student profile, security, notifications, dark mode toggle, logout |
+| **`css/style.css`** | *Global Styling* | Centralized design tokens, color palette, card components, nav bars |
+| **`js/app.js`** | *Global Logic* | State engine, `localStorage` persistence, calculations & event routing |
+| **`images/`** | *Media Assets* | Brand logos, marks, icons, and illustrations |
+
+---
+
+## 7. Implementation Roadmap & Development Phases
 
 ```mermaid
 gantt
@@ -358,7 +412,7 @@ gantt
 
 ---
 
-## 7. Key Testing & Quality Assurance Checklist
+## 8. Key Testing & Quality Assurance Checklist
 
 - [ ] **Currency Math Precision:** Ensure floating point roundoff errors are eliminated using integer cents or `toFixed(2)`.
 - [ ] **Bill Split Edge Cases:** Handle bill division remainders cleanly (e.g. $10.00 / 3 = $3.33 each with remainder noted).
