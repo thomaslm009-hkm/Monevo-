@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Monevo — Bill Splitter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .counter-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+    .counter-btn:active {
+      transform: scale(0.9);
+      background: var(--blue);
+      color: #fff;
+    }
+    .avatar-stack {
+      display: flex;
+      align-items: center;
+      padding-left: 6px;
+      margin: 8px 0;
+    }
+    .avatar-bubble {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      margin-left: -8px;
+      box-shadow: var(--shadow-sm);
+    }
+    .avatar-bubble:first-child {
+      margin-left: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-viewport">
+  <div class="phone-shell">
+    <div class="screen-container">
+      <div class="notch"></div>
+      
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●● 100%</span>
+      </div>
+
+      <!-- App Header -->
+      <div class="app-header">
+        <a href="dashboard.html" class="header-back">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+        <div class="header-title">Bill Splitter</div>
+        <div style="width: 36px;"></div>
+      </div>
+
+      <div class="main-content" style="gap: 14px;">
+        <div class="h1">Split a bill with roommates</div>
+
+        <!-- Bill Total Input Card -->
+        <div class="card" style="text-align: center; padding: 18px 12px; background: var(--card-subtle);">
+          <div class="sub-text" style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">Total Bill Amount</div>
+          <div style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+            <span class="mono" style="font-size: 28px; font-weight: 700; color: var(--text-main);">$</span>
+            <input type="number" step="0.50" id="splitTotalInput" oninput="calculateSplit()" class="mono" value="50.00" style="font-size: 36px; font-weight: 700; text-align: left; width: 140px; color: var(--text-main);">
+          </div>
+        </div>
+
+        <!-- People Counter -->
+        <div class="card row" style="padding: 14px 16px;">
+          <div>
+            <span class="h2">Split between</span>
+            <div class="sub-text">Roommates & friends</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="counter-btn" onclick="updatePeopleCount(-1)">–</div>
+            <span class="mono" id="peopleCountDisplay" style="font-size: 17px; font-weight: 700; min-width: 20px; text-align: center;">4</span>
+            <div class="counter-btn" onclick="updatePeopleCount(1)">+</div>
+          </div>
+        </div>
+
+        <!-- Roommate Avatars -->
+        <div class="avatar-stack" id="avatarStack">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Result Box -->
+        <div class="card" style="background: var(--grad-soft); text-align: center; padding: 20px 14px;">
+          <div class="sub-text" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;">Each person pays</div>
+          <div class="mono" id="perPersonAmountDisplay" style="font-size: 32px; font-weight: 800; color: var(--navy); margin-top: 4px;">$12.50</div>
+          <div class="sub-text" style="margin-top: 4px;" id="splitNoteSubtitle">Evenly divided among 4 roommates</div>
+        </div>
+
+        <!-- Bill Description / Tag -->
+        <div class="input-group">
+          <label class="input-label">Bill Description (Optional)</label>
+          <input type="text" id="splitNoteInput" class="input-field" placeholder="e.g. WiFi Bill, Groceries, Pizza" value="Friday Night Groceries & Pizza">
+        </div>
+
+        <!-- Action Triggers -->
+        <div style="display: flex; gap: 10px; margin-top: 4px;">
+          <button class="btn-grad" onclick="shareViaMessage()" style="flex: 1;">
+            💬 Share Breakdown
+          </button>
+          <button class="btn-secondary" onclick="copySplitLink()" style="flex: 1;">
+            🔗 Copy Summary
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Bottom Navigation Bar -->
+      <div class="tabbar">
+        <a href="dashboard.html" class="tab-item" data-tab="home">
+          <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span class="tab-lbl">Home</span>
+        </a>
+        <a href="expenses.html" class="tab-item" data-tab="track">
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg>
+          <span class="tab-lbl">Track</span>
+        </a>
+        <a href="budget.html" class="tab-item" data-tab="budget">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span class="tab-lbl">Budget</span>
+        </a>
+        <a href="analytics.html" class="tab-item" data-tab="insights">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg>
+          <span class="tab-lbl">Insights</span>
+        </a>
+        <a href="profile.html" class="tab-item" data-tab="profile">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <span class="tab-lbl">Profile</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  let peopleCount = 4;
+  const avatarColors = ['var(--grad)', 'var(--navy-2)', '#8DA0BF', 'var(--gold)', 'var(--coral)', 'var(--blue)', '#9B59B6', '#1ABC9C'];
+  const defaultNames = ['Alex (You)', 'Jordan', 'Maya', 'Sam', 'Taylor', 'Chris', 'Riley', 'Morgan'];
+
+  function updatePeopleCount(delta) {
+    peopleCount = Math.max(2, Math.min(10, peopleCount + delta));
+    document.getElementById('peopleCountDisplay').textContent = peopleCount;
+    calculateSplit();
+  }
+
+  function calculateSplit() {
+    const total = parseFloat(document.getElementById('splitTotalInput').value) || 0;
+    const perPerson = total > 0 ? (total / peopleCount) : 0;
+
+    document.getElementById('perPersonAmountDisplay').textContent = MonevoUI.formatCurrency(perPerson);
+    document.getElementById('splitNoteSubtitle').textContent = `Evenly divided among ${peopleCount} roommates`;
+
+    // Render Avatars
+    const avatarContainer = document.getElementById('avatarStack');
+    let html = '';
+    for (let i = 0; i < peopleCount; i++) {
+      const color = avatarColors[i % avatarColors.length];
+      const initial = defaultNames[i] ? defaultNames[i][0] : `P${i+1}`;
+      html += `<div class="avatar-bubble" style="background: ${color};" title="${defaultNames[i] || 'Roommate'}">${initial}</div>`;
+    }
+    avatarContainer.innerHTML = html;
+  }
+
+  function shareViaMessage() {
+    const total = parseFloat(document.getElementById('splitTotalInput').value) || 0;
+    const perPerson = (total / peopleCount).toFixed(2);
+    const note = document.getElementById('splitNoteInput').value || 'Shared Bill';
+    const text = `Hey! The "${note}" comes out to $${perPerson} each ($${total.toFixed(2)} total between ${peopleCount} of us) via Monevo! 💸`;
+
+    if (navigator.share) {
+      navigator.share({ title: 'Monevo Bill Split', text: text }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(text);
+      MonevoUI.showToast('Split summary copied to clipboard!', '📋');
+    }
+  }
+
+  function copySplitLink() {
+    const total = parseFloat(document.getElementById('splitTotalInput').value) || 0;
+    const perPerson = (total / peopleCount).toFixed(2);
+    navigator.clipboard.writeText(`Monevo Bill: $${total.toFixed(2)} split ${peopleCount} ways = $${perPerson}/person`);
+    MonevoUI.showToast('Copied summary link!', '🔗');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    calculateSplit();
+  });
+</script>
+</body>
+</html>

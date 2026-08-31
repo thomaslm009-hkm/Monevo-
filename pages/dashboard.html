@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Monevo — Home Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="app-viewport">
+  <div class="phone-shell">
+    <div class="screen-container">
+      <div class="notch"></div>
+      
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●● 100%</span>
+      </div>
+
+      <div class="main-content">
+        <!-- Top Greeting Header -->
+        <div class="row">
+          <div>
+            <div class="sub-text" id="userGreeting">Hi Alex 👋</div>
+            <div class="h1">Your money today</div>
+          </div>
+          <div class="icon-badge card-interactive" onclick="MonevoUI.showToast('You are on track with your weekly budget!', '🔔')" style="background: var(--border-light);">
+            🔔
+          </div>
+        </div>
+
+        <!-- Gradient Total Balance Card -->
+        <div class="hero-balance-card">
+          <div class="hero-balance-label">Total Balance</div>
+          <div class="hero-balance-amount" id="totalBalanceDisplay">$1,248.50</div>
+          
+          <div class="row" style="margin-top: 14px; font-size: 11px;">
+            <span style="opacity: 0.9;">Monthly budget</span>
+            <span class="mono" id="monthlyBudgetRatio">$487.00 / $800.00</span>
+          </div>
+          <div class="bar-track" style="background: rgba(255,255,255,0.25); margin-top: 5px;">
+            <div class="bar-fill" id="monthlyBudgetBar" style="width: 61%; background: #FFFFFF;"></div>
+          </div>
+        </div>
+
+        <!-- Quick Access Shortcuts -->
+        <div class="h2" style="margin-top: 2px;">Quick access</div>
+        <div class="quick-action-grid">
+          <a href="expenses.html" class="quick-action-btn">
+            <div class="action-icon">➕</div>
+            <span class="action-lbl">Add</span>
+          </a>
+          <a href="bill-splitter.html" class="quick-action-btn">
+            <div class="action-icon">🧾</div>
+            <span class="action-lbl">Split</span>
+          </a>
+          <a href="savings.html" class="quick-action-btn">
+            <div class="action-icon">🐷</div>
+            <span class="action-lbl">Save</span>
+          </a>
+          <a href="discounts.html" class="quick-action-btn">
+            <div class="action-icon">🏷️</div>
+            <span class="action-lbl">Deals</span>
+          </a>
+        </div>
+
+        <!-- Secondary Shortcuts Row -->
+        <div style="display: flex; gap: 8px;">
+          <a href="meal-planner.html" class="card card-sm card-interactive" style="flex: 1; display: flex; align-items: center; gap: 8px; padding: 10px 12px;">
+            <span style="font-size: 18px;">🍱</span>
+            <div>
+              <div style="font-size: 11px; font-weight: 700;">Meal Planner</div>
+              <div class="sub-text" style="font-size: 9px;">Daily food limits</div>
+            </div>
+          </a>
+          <a href="restaurant.html" class="card card-sm card-interactive" style="flex: 1; display: flex; align-items: center; gap: 8px; padding: 10px 12px;">
+            <span style="font-size: 18px;">📍</span>
+            <div>
+              <div style="font-size: 11px; font-weight: 700;">Eats Finder</div>
+              <div class="sub-text" style="font-size: 9px;">Campus discounts</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="row">
+          <div class="h2">Recent transactions</div>
+          <a href="analytics.html" class="sub-text" style="color: var(--blue); font-weight: 700;">See all</a>
+        </div>
+
+        <div class="card" style="padding: 6px 12px; display: flex; flex-direction: column;" id="transactionListContainer">
+          <!-- Populated by JavaScript -->
+        </div>
+
+      </div>
+
+      <!-- Bottom Navigation Bar -->
+      <div class="tabbar">
+        <a href="dashboard.html" class="tab-item active" data-tab="home">
+          <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span class="tab-lbl">Home</span>
+        </a>
+        <a href="expenses.html" class="tab-item" data-tab="track">
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg>
+          <span class="tab-lbl">Track</span>
+        </a>
+        <a href="budget.html" class="tab-item" data-tab="budget">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span class="tab-lbl">Budget</span>
+        </a>
+        <a href="analytics.html" class="tab-item" data-tab="insights">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg>
+          <span class="tab-lbl">Insights</span>
+        </a>
+        <a href="profile.html" class="tab-item" data-tab="profile">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <span class="tab-lbl">Profile</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  function renderDashboard() {
+    const user = MonevoStore.state.user;
+    document.getElementById('userGreeting').textContent = `Hi ${user.name.split(' ')[0]} 👋`;
+
+    // Render Recent Transactions
+    const txContainer = document.getElementById('transactionListContainer');
+    const recentTx = MonevoStore.state.transactions.slice(0, 5);
+
+    let html = '';
+    let totalExpenseThisMonth = 0;
+    let totalIncomeThisMonth = 0;
+
+    MonevoStore.state.transactions.forEach(t => {
+      if (t.type === 'expense') totalExpenseThisMonth += Number(t.amount);
+      if (t.type === 'income') totalIncomeThisMonth += Number(t.amount);
+    });
+
+    const currentBalance = 1248.50; // base student account
+    document.getElementById('totalBalanceDisplay').textContent = MonevoUI.formatCurrency(currentBalance);
+
+    const monthlyBudget = user.monthlyBudget || 800.00;
+    const spentPct = Math.min(100, Math.round((totalExpenseThisMonth / monthlyBudget) * 100));
+    document.getElementById('monthlyBudgetRatio').textContent = `${MonevoUI.formatCurrency(totalExpenseThisMonth)} / ${MonevoUI.formatCurrency(monthlyBudget)}`;
+    document.getElementById('monthlyBudgetBar').style.width = spentPct + '%';
+
+    recentTx.forEach((tx, idx) => {
+      const isExpense = tx.type === 'expense';
+      const color = isExpense ? 'var(--coral)' : 'var(--green)';
+      const sign = isExpense ? '-' : '+';
+      const border = idx < recentTx.length - 1 ? 'border-bottom: 1px solid var(--border-light);' : '';
+
+      html += `
+        <div class="row" style="padding: 10px 0; ${border}">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="icon-badge" style="background: var(--card-subtle);">${tx.icon || '💸'}</div>
+            <div>
+              <div style="font-size: 12px; font-weight: 600;">${tx.title}</div>
+              <div class="sub-text">${tx.category} · ${tx.date}</div>
+            </div>
+          </div>
+          <div class="mono" style="font-size: 12px; font-weight: 700; color: ${color};">
+            ${sign}${MonevoUI.formatCurrency(tx.amount)}
+          </div>
+        </div>
+      `;
+    });
+
+    txContainer.innerHTML = html;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    MonevoUI.setupActiveTab('home');
+    renderDashboard();
+  });
+</script>
+</body>
+</html>

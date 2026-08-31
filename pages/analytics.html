@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Monevo — Spending Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .donut-chart-box {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--blue) 0% 38%,
+        var(--green) 38% 63%,
+        var(--gold) 63% 82%,
+        #8DA0BF 82% 100%
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .donut-chart-hole {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-viewport">
+  <div class="phone-shell">
+    <div class="screen-container">
+      <div class="notch"></div>
+      
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●● 100%</span>
+      </div>
+
+      <!-- App Header -->
+      <div class="app-header">
+        <a href="dashboard.html" class="header-back">
+          <svg class="ic" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </a>
+        <div class="header-title">Spending Analytics</div>
+        <div style="width: 36px;"></div>
+      </div>
+
+      <div class="main-content" style="gap: 14px;">
+        <!-- Timeframe Switcher -->
+        <div class="row">
+          <div class="h1">Insights</div>
+          <div style="display: flex; background: var(--border-light); border-radius: 10px; padding: 3px; font-size: 10px; font-weight: 700;">
+            <span id="tabThisMonth" onclick="switchAnalyticsMonth('this')" style="padding: 4px 10px; background: var(--card); border-radius: 7px; cursor: pointer; box-shadow: var(--shadow-sm);">This Month</span>
+            <span id="tabLastMonth" onclick="switchAnalyticsMonth('last')" style="padding: 4px 10px; color: var(--text-muted); cursor: pointer;">Last Month</span>
+          </div>
+        </div>
+
+        <!-- Donut Visual Card -->
+        <div class="card" style="text-align: center; padding: 20px 14px;">
+          <div class="donut-chart-box" id="donutChart">
+            <div class="donut-chart-hole">
+              <div class="mono" id="donutTotalSpent" style="font-size: 15px; font-weight: 700;">$487</div>
+              <div class="sub-text" style="font-size: 8px;">spent</div>
+            </div>
+          </div>
+          <div class="sub-text" style="color: var(--green-dark); font-weight: 700; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 4px;">
+            <span>▼</span> 12% less spent than last month
+          </div>
+        </div>
+
+        <!-- Breakdown List -->
+        <div class="h2">Category Breakdown</div>
+        <div class="card" style="display: flex; flex-direction: column; gap: 10px; padding: 14px;" id="analyticsBreakdownList">
+          <div class="row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 3px; background: var(--blue); display: inline-block;"></span>
+              <span class="sub-text" style="font-size: 12px; font-weight: 600; color: var(--text-main);">Rent & Utilities</span>
+            </div>
+            <span class="mono sub-text" style="font-weight: 700; color: var(--text-main);">$185.00 (38%)</span>
+          </div>
+          <div class="row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 3px; background: var(--green); display: inline-block;"></span>
+              <span class="sub-text" style="font-size: 12px; font-weight: 600; color: var(--text-main);">Campus Food & Dining</span>
+            </div>
+            <span class="mono sub-text" style="font-weight: 700; color: var(--text-main);">$121.75 (25%)</span>
+          </div>
+          <div class="row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 3px; background: var(--gold); display: inline-block;"></span>
+              <span class="sub-text" style="font-size: 12px; font-weight: 600; color: var(--text-main);">Fun & Entertainment</span>
+            </div>
+            <span class="mono sub-text" style="font-weight: 700; color: var(--text-main);">$92.50 (19%)</span>
+          </div>
+          <div class="row">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 3px; background: #8DA0BF; display: inline-block;"></span>
+              <span class="sub-text" style="font-size: 12px; font-weight: 600; color: var(--text-main);">Transport & Books</span>
+            </div>
+            <span class="mono sub-text" style="font-weight: 700; color: var(--text-main);">$87.75 (18%)</span>
+          </div>
+        </div>
+
+        <!-- Student Insight Tip -->
+        <div class="card" style="background: var(--grad-soft); padding: 12px 14px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--navy);">💡 Smart Student Habit</div>
+          <div class="sub-text" style="margin-top: 2px;">Cooking 2 more meals at home this week saved you ~$18 compared to campus dining.</div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Navigation Bar -->
+      <div class="tabbar">
+        <a href="dashboard.html" class="tab-item" data-tab="home">
+          <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span class="tab-lbl">Home</span>
+        </a>
+        <a href="expenses.html" class="tab-item" data-tab="track">
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg>
+          <span class="tab-lbl">Track</span>
+        </a>
+        <a href="budget.html" class="tab-item" data-tab="budget">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span class="tab-lbl">Budget</span>
+        </a>
+        <a href="analytics.html" class="tab-item active" data-tab="insights">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg>
+          <span class="tab-lbl">Insights</span>
+        </a>
+        <a href="profile.html" class="tab-item" data-tab="profile">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <span class="tab-lbl">Profile</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  function switchAnalyticsMonth(type) {
+    const tabThis = document.getElementById('tabThisMonth');
+    const tabLast = document.getElementById('tabLastMonth');
+    const totalEl = document.getElementById('donutTotalSpent');
+
+    if (type === 'last') {
+      tabLast.style.background = 'var(--card)';
+      tabLast.style.color = 'var(--text-main)';
+      tabLast.style.boxShadow = 'var(--shadow-sm)';
+      tabThis.style.background = 'transparent';
+      tabThis.style.color = 'var(--text-muted)';
+      tabThis.style.boxShadow = 'none';
+      totalEl.textContent = '$553';
+    } else {
+      tabThis.style.background = 'var(--card)';
+      tabThis.style.color = 'var(--text-main)';
+      tabThis.style.boxShadow = 'var(--shadow-sm)';
+      tabLast.style.background = 'transparent';
+      tabLast.style.color = 'var(--text-muted)';
+      tabLast.style.boxShadow = 'none';
+      totalEl.textContent = '$487';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    MonevoUI.setupActiveTab('insights');
+  });
+</script>
+</body>
+</html>

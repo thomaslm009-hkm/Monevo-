@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Monevo — Log In / Register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="app-viewport">
+  <div class="phone-shell">
+    <div class="screen-container">
+      <div class="notch"></div>
+      
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●● 100%</span>
+      </div>
+
+      <div class="main-content" style="padding-top: 14px; gap: 14px;">
+        <div style="text-align: center; margin: 6px 0 10px;">
+          <svg width="48" height="48" viewBox="0 0 64 64" style="margin-bottom: 6px;">
+            <defs>
+              <linearGradient id="authGrad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#2ECC71"/>
+                <stop offset="100%" stop-color="#2E86DE"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 52 L18 34 L26 44 L44 18" stroke="url(#authGrad)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M34 18 L46 14 L44 27" fill="url(#authGrad)"/>
+          </svg>
+          <div class="h1" id="authTitle">Welcome back</div>
+          <div class="sub-text" id="authSubtitle">Log in to keep tracking your student money.</div>
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="segmented-control">
+          <div class="segmented-option active" id="tabLogin" onclick="switchAuthTab('login')">Log In</div>
+          <div class="segmented-option" id="tabRegister" onclick="switchAuthTab('register')">Register</div>
+        </div>
+
+        <!-- Form -->
+        <form id="authForm" onsubmit="handleAuthSubmit(event)" style="display:flex; flex-direction:column; gap:12px;">
+          <div class="input-group" id="nameGroup" style="display: none;">
+            <label class="input-label">Full Name</label>
+            <input type="text" class="input-field" id="authName" placeholder="e.g. Alex Rivera" value="Alex Rivera">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Student Email</label>
+            <input type="email" class="input-field" id="authEmail" placeholder="you@university.edu" value="alex.rivera@university.edu" required>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Password</label>
+            <input type="password" class="input-field" id="authPass" placeholder="••••••••••••" value="studentpass123" required>
+          </div>
+
+          <div class="row" id="forgotRow" style="margin-top: -4px;">
+            <span></span>
+            <a href="#" onclick="MonevoUI.showToast('Password reset link sent to student email', '📧'); return false;" class="sub-text" style="color: var(--blue); font-weight: 700;">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-grad" id="authSubmitBtn" style="margin-top: 6px;">
+            Log In to Monevo
+          </button>
+        </form>
+
+        <div style="text-align: center; color: var(--text-muted); font-size: 11px; margin: 2px 0;">
+          — or continue with —
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <div class="card card-sm card-interactive" onclick="quickDemoLogin()" style="flex: 1; text-align: center; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span>⚡</span> Demo Instant Login
+          </div>
+        </div>
+
+        <div class="card" style="background: var(--grad-soft); padding: 12px; text-align: center; margin-top: auto;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--blue);">🎓 University Partner Access</div>
+          <div class="sub-text" style="font-size: 10px; margin-top: 2px;">Sign in with your .edu domain for verified discounts.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  let mode = 'login';
+
+  function switchAuthTab(newMode) {
+    mode = newMode;
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const nameGroup = document.getElementById('nameGroup');
+    const authTitle = document.getElementById('authTitle');
+    const authSubtitle = document.getElementById('authSubtitle');
+    const authSubmitBtn = document.getElementById('authSubmitBtn');
+    const forgotRow = document.getElementById('forgotRow');
+
+    if (mode === 'register') {
+      tabRegister.classList.add('active');
+      tabLogin.classList.remove('active');
+      nameGroup.style.display = 'flex';
+      authTitle.textContent = 'Create account';
+      authSubtitle.textContent = 'Join Monevo to master your college finances.';
+      authSubmitBtn.textContent = 'Create Student Account';
+      forgotRow.style.display = 'none';
+    } else {
+      tabLogin.classList.add('active');
+      tabRegister.classList.remove('active');
+      nameGroup.style.display = 'none';
+      authTitle.textContent = 'Welcome back';
+      authSubtitle.textContent = 'Log in to keep tracking your student money.';
+      authSubmitBtn.textContent = 'Log In to Monevo';
+      forgotRow.style.display = 'flex';
+    }
+  }
+
+  function handleAuthSubmit(e) {
+    e.preventDefault();
+    const email = document.getElementById('authEmail').value;
+    const name = document.getElementById('authName').value || 'Alex Rivera';
+
+    MonevoStore.state.user.email = email;
+    MonevoStore.state.user.name = name;
+    MonevoStore.saveState();
+
+    MonevoUI.showToast(`Welcome, ${name}! Redirecting...`, '🎉');
+    setTimeout(() => {
+      window.location.href = 'dashboard.html';
+    }, 800);
+  }
+
+  function quickDemoLogin() {
+    MonevoUI.showToast('Logging in as Alex Rivera (Demo)...', '⚡');
+    setTimeout(() => {
+      window.location.href = 'dashboard.html';
+    }, 600);
+  }
+</script>
+</body>
+</html>

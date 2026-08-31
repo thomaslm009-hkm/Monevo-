@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Monevo — Smart Money. Smarter Student Life.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .splash-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      color: #FFFFFF;
+      position: relative;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .logo-container {
+      margin-bottom: 20px;
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(46, 204, 113, 0.4)); }
+      50% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(46, 134, 222, 0.7)); }
+    }
+    .splash-title {
+      font-family: var(--font-brand);
+      font-weight: 800;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 6px;
+    }
+    .splash-tagline {
+      color: #8DA0BF;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    .progress-track {
+      width: 160px;
+      height: 5px;
+      background: #1C355C;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .progress-bar-inner {
+      width: 0%;
+      height: 100%;
+      background: var(--grad);
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+    .loading-status {
+      font-size: 11px;
+      color: #7C8AA0;
+      font-weight: 500;
+      min-height: 16px;
+    }
+    .splash-actions {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      max-width: 260px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.5s ease;
+    }
+    .splash-actions.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-viewport">
+  <div class="phone-shell">
+    <div class="screen-container">
+      <div class="notch"></div>
+      
+      <div class="splash-view">
+        <div class="logo-container">
+          <svg width="84" height="84" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="splashGrad" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#2ECC71"/>
+                <stop offset="100%" stop-color="#2E86DE"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 52 L18 34 L26 44 L44 18" stroke="url(#splashGrad)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M34 18 L46 14 L44 27" fill="url(#splashGrad)"/>
+          </svg>
+        </div>
+
+        <div class="splash-title">Monevo</div>
+        <div class="splash-tagline">Smart Student Finances</div>
+
+        <div class="progress-track">
+          <div class="progress-bar-inner" id="splashProgress"></div>
+        </div>
+        <div class="loading-status" id="splashStatus">Initializing student wallet...</div>
+
+        <div class="splash-actions" id="splashActions">
+          <a href="pages/dashboard.html" class="btn-grad" style="padding: 14px;">Enter Demo Dashboard →</a>
+          <a href="pages/login.html" class="btn-secondary" style="background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.15);">Log In / Register</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  // Simulated App Preload Progress
+  const progressEl = document.getElementById('splashProgress');
+  const statusEl = document.getElementById('splashStatus');
+  const actionsEl = document.getElementById('splashActions');
+
+  const steps = [
+    { pct: 30, text: 'Loading semester budgets...' },
+    { pct: 65, text: 'Fetching campus meal deals...' },
+    { pct: 90, text: 'Syncing savings goals...' },
+    { pct: 100, text: 'Ready!' }
+  ];
+
+  let currentStep = 0;
+  function runStep() {
+    if (currentStep < steps.length) {
+      progressEl.style.width = steps[currentStep].pct + '%';
+      statusEl.textContent = steps[currentStep].text;
+      currentStep++;
+      setTimeout(runStep, 450);
+    } else {
+      setTimeout(() => {
+        actionsEl.classList.add('visible');
+        statusEl.textContent = 'Welcome back, Alex!';
+      }, 200);
+    }
+  }
+
+  setTimeout(runStep, 300);
+</script>
+</body>
+</html>

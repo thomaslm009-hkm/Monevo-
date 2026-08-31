@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Monevo — Profile & Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .toggle-switch {
+      width: 44px;
+      height: 24px;
+      border-radius: 12px;
+      background: var(--border-light);
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .toggle-switch.on {
+      background: var(--blue);
+    }
+    .toggle-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.on .toggle-thumb {
+      transform: translateX(20px);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-viewport">
+  <div class="phone-shell">
+    <div class="screen-container">
+      <div class="notch"></div>
+      
+      <div class="statusbar">
+        <span>9:41</span>
+        <span>●●● 100%</span>
+      </div>
+
+      <div class="main-content" style="gap: 16px;">
+        <!-- Profile Header -->
+        <div style="text-align: center; padding-top: 10px;">
+          <div style="width: 68px; height: 68px; border-radius: 50%; background: var(--grad); margin: 0 auto; display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-brand); font-weight: 700; font-size: 24px; box-shadow: var(--shadow-btn);">
+            AR
+          </div>
+          <div class="h1" id="profileNameDisplay" style="margin-top: 10px;">Alex Rivera</div>
+          <div class="sub-text" id="profileEmailDisplay">alex.rivera@university.edu</div>
+          <div class="pill pill-green" style="margin-top: 6px;">
+            🎓 Verified Student
+          </div>
+        </div>
+
+        <!-- Settings List -->
+        <div class="card" style="padding: 0; overflow: hidden;">
+          <div class="row card-interactive" onclick="openEditProfile()" style="padding: 14px 16px; border-bottom: 1px solid var(--border-light);">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;">
+              <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+              Edit Profile
+            </div>
+            <span class="sub-text">›</span>
+          </div>
+
+          <div class="row card-interactive" onclick="MonevoUI.showToast('Passcode & Biometrics are enabled', '🔒')" style="padding: 14px 16px; border-bottom: 1px solid var(--border-light);">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;">
+              <svg class="ic" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+              Security & Passcode
+            </div>
+            <span class="sub-text">›</span>
+          </div>
+
+          <div class="row card-interactive" onclick="MonevoUI.showToast('Budget alert notifications turned ON', '🔔')" style="padding: 14px 16px; border-bottom: 1px solid var(--border-light);">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;">
+              <svg class="ic" viewBox="0 0 24 24"><path d="M18 8a6 6 0 00-12 0c0 4-2 5-2 7h16c0-2-2-3-2-7"/><path d="M10 21h4"/></svg>
+              Budget Notifications
+            </div>
+            <span class="sub-text">›</span>
+          </div>
+
+          <!-- Dark Mode Toggle -->
+          <div class="row" style="padding: 14px 16px; border-bottom: 1px solid var(--border-light);">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;">
+              <svg class="ic" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+              Dark Mode
+            </div>
+            <div class="toggle-switch" id="darkModeToggle" onclick="handleToggleTheme()">
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+
+          <!-- Reset Demo Data -->
+          <div class="row card-interactive" onclick="handleResetData()" style="padding: 14px 16px; border-bottom: 1px solid var(--border-light);">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--gold);">
+              <svg class="ic" style="color: var(--gold);" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Reset Demo Data
+            </div>
+            <span class="sub-text">↺</span>
+          </div>
+
+          <!-- Log Out -->
+          <div class="row card-interactive" onclick="handleLogout()" style="padding: 14px 16px;">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: var(--coral);">
+              <svg class="ic" style="color: var(--coral);" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              Log Out
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-text" style="text-align: center; font-size: 10px; margin-top: auto;">
+          Monevo v1.0.0 — University Edition
+        </div>
+      </div>
+
+      <!-- Bottom Navigation Bar -->
+      <div class="tabbar">
+        <a href="dashboard.html" class="tab-item" data-tab="home">
+          <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          <span class="tab-lbl">Home</span>
+        </a>
+        <a href="expenses.html" class="tab-item" data-tab="track">
+          <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 4-6"/></svg>
+          <span class="tab-lbl">Track</span>
+        </a>
+        <a href="budget.html" class="tab-item" data-tab="budget">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span class="tab-lbl">Budget</span>
+        </a>
+        <a href="analytics.html" class="tab-item" data-tab="insights">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6 3"/></svg>
+          <span class="tab-lbl">Insights</span>
+        </a>
+        <a href="profile.html" class="tab-item active" data-tab="profile">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          <span class="tab-lbl">Profile</span>
+        </a>
+      </div>
+
+      <!-- Edit Profile Modal -->
+      <div class="modal-overlay" id="editProfileModal">
+        <div class="modal-card">
+          <div class="row">
+            <div class="h2">Edit Student Profile</div>
+            <span onclick="closeEditProfile()" style="cursor: pointer; font-size: 16px;">✕</span>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Full Name</label>
+            <input type="text" id="editNameInput" class="input-field" value="Alex Rivera">
+          </div>
+          <div class="input-group">
+            <label class="input-label">University Email</label>
+            <input type="email" id="editEmailInput" class="input-field" value="alex.rivera@university.edu">
+          </div>
+          <button class="btn-grad" onclick="saveProfileChanges()">Save Changes</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+  function renderProfile() {
+    const user = MonevoStore.state.user;
+    document.getElementById('profileNameDisplay').textContent = user.name || 'Alex Rivera';
+    document.getElementById('profileEmailDisplay').textContent = user.email || 'alex.rivera@university.edu';
+
+    const isDark = user.theme === 'dark';
+    document.getElementById('darkModeToggle').classList.toggle('on', isDark);
+  }
+
+  function handleToggleTheme() {
+    const newTheme = MonevoStore.toggleTheme();
+    document.getElementById('darkModeToggle').classList.toggle('on', newTheme === 'dark');
+    MonevoUI.showToast(`Switched to ${newTheme} theme!`, newTheme === 'dark' ? '🌙' : '☀️');
+  }
+
+  function openEditProfile() {
+    const user = MonevoStore.state.user;
+    document.getElementById('editNameInput').value = user.name || '';
+    document.getElementById('editEmailInput').value = user.email || '';
+    document.getElementById('editProfileModal').classList.add('open');
+  }
+
+  function closeEditProfile() {
+    document.getElementById('editProfileModal').classList.remove('open');
+  }
+
+  function saveProfileChanges() {
+    const name = document.getElementById('editNameInput').value.trim();
+    const email = document.getElementById('editEmailInput').value.trim();
+    if (!name || !email) {
+      MonevoUI.showToast('Please fill in name and email', '⚠️');
+      return;
+    }
+    MonevoStore.state.user.name = name;
+    MonevoStore.state.user.email = email;
+    MonevoStore.saveState();
+    closeEditProfile();
+    MonevoUI.showToast('Profile updated!', '✓');
+    renderProfile();
+  }
+
+  function handleResetData() {
+    if (confirm('Reset all demo data back to default initial values?')) {
+      MonevoStore.resetToDefault();
+      MonevoUI.showToast('Demo data restored!', '↺');
+      renderProfile();
+    }
+  }
+
+  function handleLogout() {
+    MonevoUI.showToast('Logging out...', '👋');
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 600);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    MonevoUI.setupActiveTab('profile');
+    renderProfile();
+  });
+</script>
+</body>
+</html>
