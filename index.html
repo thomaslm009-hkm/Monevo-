@@ -95,38 +95,33 @@
 <body>
 
 <div class="app-viewport">
-  <div class="phone-shell">
-    <div class="screen-container">
-      <div class="notch"></div>
-      
-      <div class="splash-view">
-        <div class="logo-container">
-          <svg width="84" height="84" viewBox="0 0 64 64">
-            <defs>
-              <linearGradient id="splashGrad" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0%" stop-color="#2ECC71"/>
-                <stop offset="100%" stop-color="#2E86DE"/>
-              </linearGradient>
-            </defs>
-            <path d="M4 52 L18 34 L26 44 L44 18" stroke="url(#splashGrad)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M34 18 L46 14 L44 27" fill="url(#splashGrad)"/>
-          </svg>
-        </div>
-
-        <div class="splash-title">Monevo</div>
-        <div class="splash-tagline">Smart Student Finances</div>
-
-        <div class="progress-track">
-          <div class="progress-bar-inner" id="splashProgress"></div>
-        </div>
-        <div class="loading-status" id="splashStatus">Initializing student wallet...</div>
-
-        <div class="splash-actions" id="splashActions">
-          <a href="pages/dashboard.html" class="btn-grad" style="padding: 14px;">Enter Demo Dashboard →</a>
-          <a href="pages/login.html" class="btn-secondary" style="background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.15);">Log In / Register</a>
-        </div>
+  <div class="app-container">
+    <div class="splash-view">
+      <div class="logo-container">
+        <svg width="84" height="84" viewBox="0 0 64 64">
+          <defs>
+            <linearGradient id="splashGrad" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#2ECC71"/>
+              <stop offset="100%" stop-color="#2E86DE"/>
+            </linearGradient>
+          </defs>
+          <path d="M4 52 L18 34 L26 44 L44 18" stroke="url(#splashGrad)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 18 L46 14 L44 27" fill="url(#splashGrad)"/>
+        </svg>
       </div>
 
+      <div class="splash-title">Monevo</div>
+      <div class="splash-tagline">Smart Student Finances</div>
+
+      <div class="progress-track">
+        <div class="progress-bar-inner" id="splashProgress"></div>
+      </div>
+      <div class="loading-status" id="splashStatus">Initializing student wallet...</div>
+
+      <div class="splash-actions" id="splashActions">
+        <a href="pages/dashboard.html" class="btn-grad" style="padding: 14px;">Enter Demo Dashboard →</a>
+        <a href="pages/login.html" class="btn-secondary" style="background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.15);">Log In / Register</a>
+      </div>
     </div>
   </div>
 </div>

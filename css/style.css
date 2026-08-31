@@ -112,97 +112,44 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   App Shell & Desktop Phone Container
+   App Shell & Modern Web Application Layout
    ========================================================================== */
 .app-viewport {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 24px 16px;
+  justify-content: flex-start;
+  background-color: var(--bg);
 }
 
-/* On mobile viewports, the app takes full screen */
-@media (max-width: 500px) {
-  .app-viewport {
-    padding: 0;
-    min-height: 100vh;
-    display: block;
-  }
-}
-
-.phone-shell {
+.app-container, .screen-container, .phone-shell {
   width: 100%;
-  max-width: 390px;
-  height: 844px;
-  background: var(--navy);
-  border-radius: var(--radius-phone);
-  padding: 10px;
-  box-shadow: var(--shadow-phone);
-  position: relative;
-  overflow: hidden;
+  max-width: 480px;
+  min-height: 100vh;
+  background: var(--bg);
   display: flex;
   flex-direction: column;
+  position: relative;
+  box-shadow: var(--shadow-md);
+  border-left: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+  margin: 0 auto;
+  border-radius: 0;
+  padding: 0;
 }
 
-@media (max-width: 500px) {
-  .phone-shell {
+@media (max-width: 520px) {
+  .app-container, .screen-container, .phone-shell {
     max-width: 100%;
-    height: 100vh;
-    border-radius: 0;
-    padding: 0;
+    border: none;
     box-shadow: none;
   }
 }
 
-.screen-container {
-  width: 100%;
-  height: 100%;
-  background: var(--bg);
-  border-radius: calc(var(--radius-phone) - 10px);
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  transition: background-color 0.25s ease;
-}
-
-@media (max-width: 500px) {
-  .screen-container {
-    border-radius: 0;
-  }
-}
-
-/* Status Bar & Dynamic Island Notch */
-.notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 110px;
-  height: 24px;
-  background: var(--navy);
-  border-radius: 0 0 16px 16px;
-  z-index: 100;
-}
-
-[data-theme="dark"] .notch {
-  background: #060B12;
-}
-
-.statusbar {
-  height: 38px;
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px 0 20px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-main);
-  z-index: 90;
-  user-select: none;
+/* Hide simulated hardware notch and status bar */
+.notch, .statusbar {
+  display: none !important;
 }
 
 /* App Header */
