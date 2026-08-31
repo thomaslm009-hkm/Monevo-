@@ -1,0 +1,31 @@
+{
+  "name": "Monevo — Smart Student Finances",
+  "short_name": "Monevo",
+  "description": "The evolution of money management for university students.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12233F",
+  "theme_color": "#12233F",
+  "categories": ["finance", "productivity", "education"],
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/monevo-logo.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ]
+}

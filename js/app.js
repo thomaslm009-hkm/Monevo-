@@ -412,4 +412,16 @@ const MonevoUI = {
 // Automatic initialization on DOM Load
 document.addEventListener('DOMContentLoaded', () => {
   MonevoStore.initTheme();
+
+  // Register Service Worker for PWA support
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      const swPath = window.location.pathname.includes('/pages/') ? '../sw.js' : './sw.js';
+      navigator.serviceWorker.register(swPath).then((reg) => {
+        console.log('[Monevo PWA] Service Worker registered with scope:', reg.scope);
+      }).catch((err) => {
+        console.warn('[Monevo PWA] Service Worker registration failed:', err);
+      });
+    });
+  }
 });
