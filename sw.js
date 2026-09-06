@@ -3,7 +3,7 @@
  * Enables offline access, asset caching, and standalone home-screen app experience.
  */
 
-const CACHE_NAME = 'monevo-pwa-cache-v1';
+const CACHE_NAME = 'monevo-pwa-cache-v2';
 
 const STATIC_ASSETS = [
   './',
