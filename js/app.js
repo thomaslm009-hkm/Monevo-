@@ -419,6 +419,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const swPath = window.location.pathname.includes('/pages/') ? '../sw.js' : './sw.js';
       navigator.serviceWorker.register(swPath).then((reg) => {
         console.log('[Monevo PWA] Service Worker registered with scope:', reg.scope);
+        // Prompt immediate check for update
+        if (typeof reg.update === 'function') {
+          reg.update();
+        }
       }).catch((err) => {
         console.warn('[Monevo PWA] Service Worker registration failed:', err);
       });

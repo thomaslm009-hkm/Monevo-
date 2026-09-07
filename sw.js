@@ -3,7 +3,7 @@
  * Enables offline access, asset caching, and standalone home-screen app experience.
  */
 
-const CACHE_NAME = 'monevo-pwa-cache-v2';
+const CACHE_NAME = 'monevo-pwa-cache-v3';
 
 const STATIC_ASSETS = [
   './',
@@ -28,17 +28,18 @@ const STATIC_ASSETS = [
   './pages/profile.html'
 ];
 
-// Install Event — Pre-cache static shell
+// Install Event — Pre-cache static shell & skip waiting
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Monevo SW] Pre-caching offline shell');
+      console.log('[Monevo SW] Pre-caching offline shell v3');
       return cache.addAll(STATIC_ASSETS);
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
-// Activate Event — Cleanup old caches
+// Activate Event — Cleanup all old caches immediately and claim clients
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -54,15 +55,13 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event — Network first with cache fallback for offline readiness
+// Fetch Event — Network First (online fetches fresh code; offline uses cache)
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      // Return cached response if available, then update cache in background
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
+    fetch(event.request)
+      .then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -70,12 +69,10 @@ self.addEventListener('fetch', (event) => {
           });
         }
         return networkResponse;
-      }).catch(() => {
-        // Offline fallback
-        return cachedResponse;
-      });
-
-      return cachedResponse || fetchPromise;
-    })
+      })
+      .catch(() => {
+        // Fallback to cache when offline
+        return caches.match(event.request);
+      })
   );
 });

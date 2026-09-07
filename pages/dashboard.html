@@ -32,16 +32,16 @@
         </div>
 
         <!-- Gradient Total Balance Card -->
-        <div class="hero-balance-card">
-          <div class="hero-balance-label">Total Balance</div>
-          <div class="hero-balance-amount" id="totalBalanceDisplay">฿1,248.50</div>
+        <div class="hero-balance-card" style="background: linear-gradient(120deg, #2ECC71, #2E86DE); border-radius: 20px; padding: 20px 18px; color: #FFFFFF; box-shadow: 0 12px 28px -6px rgba(46, 134, 222, 0.45); display: flex; flex-direction: column; width: 100%; box-sizing: border-box; min-height: 135px; margin-bottom: 4px;">
+          <div class="hero-balance-label" style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; opacity: 0.92; text-transform: uppercase; color: #FFFFFF; margin-bottom: 4px;">Total Balance</div>
+          <div class="hero-balance-amount" id="totalBalanceDisplay" style="font-family: 'IBM Plex Mono', monospace, sans-serif; font-size: 32px; font-weight: 800; line-height: 1.2; color: #FFFFFF; margin-top: 2px; letter-spacing: -0.02em;">฿1,248.50</div>
           
-          <div class="row" style="margin-top: 14px; font-size: 11px;">
-            <span style="opacity: 0.9;">Monthly budget</span>
-            <span class="mono" id="monthlyBudgetRatio">฿487.00 / ฿800.00</span>
+          <div class="row" style="margin-top: 14px; font-size: 11px; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center;">
+            <span style="opacity: 0.92;">Monthly budget</span>
+            <span class="mono" id="monthlyBudgetRatio" style="font-family: 'IBM Plex Mono', monospace, sans-serif; font-weight: 700;">฿487.00 / ฿800.00</span>
           </div>
-          <div class="bar-track" style="background: rgba(255,255,255,0.25); margin-top: 5px;">
-            <div class="bar-fill" id="monthlyBudgetBar" style="width: 61%; background: #FFFFFF;"></div>
+          <div class="bar-track" style="background: rgba(255,255,255,0.25); margin-top: 6px; height: 8px; border-radius: 999px; overflow: hidden; width: 100%;">
+            <div class="bar-fill" id="monthlyBudgetBar" style="width: 61%; height: 100%; background: #FFFFFF; border-radius: 999px; transition: width 0.4s ease;"></div>
           </div>
         </div>
 
@@ -126,53 +126,67 @@
 <script src="../js/app.js"></script>
 <script>
   function renderDashboard() {
-    const user = MonevoStore.state.user;
-    document.getElementById('userGreeting').textContent = `Hi ${user.name.split(' ')[0]} 👋`;
+    try {
+      const user = MonevoStore.state.user || { name: 'Alex Rivera', monthlyBudget: 800.00 };
+      const userName = (user.name || 'Alex').split(' ')[0];
+      const greetingEl = document.getElementById('userGreeting');
+      if (greetingEl) greetingEl.textContent = `Hi ${userName} 👋`;
 
-    // Render Recent Transactions
-    const txContainer = document.getElementById('transactionListContainer');
-    const recentTx = MonevoStore.state.transactions.slice(0, 5);
+      // Render Recent Transactions
+      const txContainer = document.getElementById('transactionListContainer');
+      const transactions = MonevoStore.state.transactions || [];
+      const recentTx = transactions.slice(0, 5);
 
-    let html = '';
-    let totalExpenseThisMonth = 0;
-    let totalIncomeThisMonth = 0;
+      let html = '';
+      let totalExpenseThisMonth = 0;
+      let totalIncomeThisMonth = 0;
 
-    MonevoStore.state.transactions.forEach(t => {
-      if (t.type === 'expense') totalExpenseThisMonth += Number(t.amount);
-      if (t.type === 'income') totalIncomeThisMonth += Number(t.amount);
-    });
+      transactions.forEach(t => {
+        if (t.type === 'expense') totalExpenseThisMonth += Number(t.amount || 0);
+        if (t.type === 'income') totalIncomeThisMonth += Number(t.amount || 0);
+      });
 
-    const currentBalance = MonevoStore.getTotalBalance();
-    document.getElementById('totalBalanceDisplay').textContent = MonevoUI.formatCurrency(currentBalance);
+      const currentBalance = MonevoStore.getTotalBalance();
+      const balanceEl = document.getElementById('totalBalanceDisplay');
+      if (balanceEl) balanceEl.textContent = MonevoUI.formatCurrency(currentBalance);
 
-    const monthlyBudget = user.monthlyBudget || 800.00;
-    const spentPct = Math.min(100, Math.round((totalExpenseThisMonth / monthlyBudget) * 100));
-    document.getElementById('monthlyBudgetRatio').textContent = `${MonevoUI.formatCurrency(totalExpenseThisMonth)} / ${MonevoUI.formatCurrency(monthlyBudget)}`;
-    document.getElementById('monthlyBudgetBar').style.width = spentPct + '%';
+      const monthlyBudget = Number(user.monthlyBudget) || 800.00;
+      const spentPct = Math.min(100, Math.round((totalExpenseThisMonth / monthlyBudget) * 100));
+      
+      const ratioEl = document.getElementById('monthlyBudgetRatio');
+      if (ratioEl) ratioEl.textContent = `${MonevoUI.formatCurrency(totalExpenseThisMonth)} / ${MonevoUI.formatCurrency(monthlyBudget)}`;
+      
+      const barEl = document.getElementById('monthlyBudgetBar');
+      if (barEl) barEl.style.width = spentPct + '%';
 
-    recentTx.forEach((tx, idx) => {
-      const isExpense = tx.type === 'expense';
-      const color = isExpense ? 'var(--coral)' : 'var(--green)';
-      const sign = isExpense ? '-' : '+';
-      const border = idx < recentTx.length - 1 ? 'border-bottom: 1px solid var(--border-light);' : '';
+      if (txContainer) {
+        recentTx.forEach((tx, idx) => {
+          const isExpense = tx.type === 'expense';
+          const color = isExpense ? 'var(--coral)' : 'var(--green)';
+          const sign = isExpense ? '-' : '+';
+          const border = idx < recentTx.length - 1 ? 'border-bottom: 1px solid var(--border-light);' : '';
 
-      html += `
-        <div class="row" style="padding: 10px 0; ${border}">
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <div class="icon-badge" style="background: var(--card-subtle);">${tx.icon || '💸'}</div>
-            <div>
-              <div style="font-size: 12px; font-weight: 600;">${tx.title}</div>
-              <div class="sub-text">${tx.category} · ${tx.date}</div>
+          html += `
+            <div class="row" style="padding: 10px 0; ${border}">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="icon-badge" style="background: var(--card-subtle);">${tx.icon || '💸'}</div>
+                <div>
+                  <div style="font-size: 12px; font-weight: 600;">${tx.title}</div>
+                  <div class="sub-text">${tx.category} · ${tx.date}</div>
+                </div>
+              </div>
+              <div class="mono" style="font-size: 12px; font-weight: 700; color: ${color};">
+                ${sign}${MonevoUI.formatCurrency(tx.amount)}
+              </div>
             </div>
-          </div>
-          <div class="mono" style="font-size: 12px; font-weight: 700; color: ${color};">
-            ${sign}${MonevoUI.formatCurrency(tx.amount)}
-          </div>
-        </div>
-      `;
-    });
+          `;
+        });
 
-    txContainer.innerHTML = html;
+        txContainer.innerHTML = html;
+      }
+    } catch (e) {
+      console.error('Error rendering dashboard:', e);
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => {
