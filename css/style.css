@@ -562,20 +562,38 @@ button, input, select, textarea {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  width: 100%;
+  padding: 4px 0 8px;
+  margin-bottom: 2px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.chip-container::-webkit-scrollbar {
+  display: none;
 }
 
 .chip {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius-pill);
-  padding: 6px 13px;
-  font-size: 11px;
+  padding: 0 14px;
+  font-size: 11.5px;
   font-weight: 600;
   background: var(--card);
   border: 1px solid var(--border-light);
   color: var(--text-muted);
   cursor: pointer;
   white-space: nowrap;
+  user-select: none;
   transition: all 0.15s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .chip.active, .chip.on {
@@ -592,6 +610,8 @@ button, input, select, textarea {
 /* Segmented Control Switcher */
 .segmented-control {
   display: flex;
+  flex: 0 0 auto;
+  flex-shrink: 0;
   background: var(--border-light);
   border-radius: 12px;
   padding: 4px;
